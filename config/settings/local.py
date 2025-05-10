@@ -22,6 +22,16 @@ ALLOWED_HOSTS = getenv("ALLOWED_HOSTS").split(",")
 
 ADMIN_URL = getenv("ADMIN_URL", "admin")
 
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8080", 
+                        "http://localhost:8080",
+                  
+                        ]
+CSRF_ALLOWED_ORIGINS = ["http://localhost:8080", 
+                        "http://127.0.0.1:8080",
+                       ]
+
+CORS_ORIGINS_WHITELIST = ["http://127.0.0.1:8080"]
+
 
 EMAIL_BACKEND = getenv('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
