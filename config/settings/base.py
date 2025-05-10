@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     "django_celery_beat",
     'drf_spectacular',
 
+    "core_apps.account",
+    "core_apps.authentications",
+    "core_apps.common",
 ]
 
 MIDDLEWARE = [
@@ -63,14 +66,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
+AUTH_USER_MODEL = "account.User"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": getenv("POSTGRES_DB"),
+        "USER": getenv("POSTGRES_USER"),
+        "PASSWORD": getenv("POSTGRES_PASSWORD"),
+        "HOST": getenv("POSTGRES_HOST"),
+        "PORT": getenv("POSTGRES_PORT"),
     }
 }
 
@@ -129,3 +136,20 @@ STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TAGGIT_CASE_INSENSITIVE = True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    # "EXCEPTION_HANDLER": "users.exceptions.common_exception_handler",
+    # "NON_FIELD_ERROR_KEY": "error",
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ),
+
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Base Project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}

@@ -18,7 +18,7 @@ SECRET_KEY = getenv("SECRET_KEY", "django-insecure-&bhh4!zf3^(0g*#1k!r#(s#)n@(48
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv("DEBUG", True)
 
-ALLOWED_HOSTS = [getenv("ALLOWED_HOSTS").split(",")]
+ALLOWED_HOSTS = getenv("ALLOWED_HOSTS").split(",")
 
 ADMIN_URL = getenv("ADMIN_URL", "admin")
 
@@ -31,3 +31,23 @@ EMAIL_USE_TLS = getenv('EMAIL_USE_TLS', default=True)
 EMAIL_HOST_USER = getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = getenv('DEFAULT_FROM_EMAIL')
+
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)s %(name)-12s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        }
+    },
+    "root": {"level": "INFO", "handlers": ["console"]},
+}
